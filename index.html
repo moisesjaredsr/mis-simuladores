@@ -36,7 +36,10 @@
         }
 
         h2 { color: var(--acento); font-size: 1.2rem; margin-bottom: 20px; }
-        h3 { font-size: 0.8rem; color: #aaa; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px;}
+        h3 { font-size: 0.8rem; color: #aaa; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;}
+
+        /* Separador visual */
+        hr { border: 0; border-top: 1px solid #444; width: 100%; margin: 15px 0; }
 
         /* Botones */
         .btn-simulador {
@@ -55,17 +58,6 @@
 
         .btn-simulador:hover { background-color: #3e4049; border-color: var(--acento); }
         .btn-simulador.activo { background-color: var(--acento); border-color: var(--acento); font-weight: bold; }
-
-        /* Enlaces descarga */
-        .link-descarga {
-            display: block;
-            color: #4da6ff;
-            text-decoration: none;
-            padding: 8px 0;
-            font-size: 0.9rem;
-            border-bottom: 1px solid #333;
-        }
-        .link-descarga:hover { color: #80c1ff; padding-left: 5px; transition: 0.2s; }
 
         /* --- ÁREA PRINCIPAL --- */
         .main-area {
@@ -87,7 +79,7 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             background-color: var(--fondo-oscuro);
-            display: flex;
+            display: flex; /* Importante para centrar */
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -118,7 +110,11 @@
     <div class="sidebar">
         <h2>🚀 Moisés Suárez</h2>
 
-        <h3>Simuladores Web</h3>
+        <button class="btn-simulador activo" onclick="mostrarInicio(this)">
+            🧪 Inicio / Bienvenida
+        </button>
+
+        <hr> <h3>Simuladores Web</h3>
         
         <button class="btn-simulador" onclick="cargarSimulador(this, 'https://simulador-curvas-moises.streamlit.app/?embed=true')">
             📊 Curvas experimentales-MJ
@@ -145,8 +141,10 @@
             <h1>Bienvenido al Laboratorio</h1>
             <p>
                 Simulador de curvas experimentales realizado por <strong>Ing. Moisés Suárez</strong> 
-                en colaboración con <strong>Lab. Superficies e Interfaces del IER-UNAM</strong> 
-                <strong>Para uso académico favor de citar<strong>.
+                en colaboración con <strong>Lab. Superficies e Interfaces del IER-UNAM</strong>.
+            </p>
+            <p>
+                 <strong>Para uso académico favor de citar.</strong>
             </p>
             <p style="margin-top: 30px; font-size: 0.9rem; color: #666;">
                 👈 Selecciona el simulador en el menú para iniciar.
@@ -155,6 +153,7 @@
     </div>
 
     <script>
+        // Función para cargar un simulador
         function cargarSimulador(boton, url) {
             // Cargar URL
             document.getElementById('visor').src = url;
@@ -162,14 +161,29 @@
             // Ocultar bienvenida
             document.getElementById('mensaje-inicio').style.display = 'none';
 
-            // Estilos de botón activo
+            // Actualizar botones activos
+            actualizarBotones(boton);
+        }
+
+        // Función para volver al inicio
+        function mostrarInicio(boton) {
+            // Limpiar iframe (opcional, para detener la app de fondo)
+            document.getElementById('visor').src = "";
+
+            // Mostrar bienvenida (usamos flex para mantener el centrado)
+            document.getElementById('mensaje-inicio').style.display = 'flex';
+
+            // Actualizar botones activos
+            actualizarBotones(boton);
+        }
+
+        // Función auxiliar para manejar la clase 'activo'
+        function actualizarBotones(botonActivo) {
             let botones = document.querySelectorAll('.btn-simulador');
             botones.forEach(b => b.classList.remove('activo'));
-            boton.classList.add('activo');
+            botonActivo.classList.add('activo');
         }
     </script>
 
 </body>
 </html>
-
-
